@@ -22,7 +22,7 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 const MongoStore = require('connect-mongo');
-const dbUrl = process.env.dbUrl;
+const dbUrl = process.env.DB_URL;
 
 const store = MongoStore.create({
 	mongoUrl: dbUrl,
