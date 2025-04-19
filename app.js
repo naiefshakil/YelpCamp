@@ -23,6 +23,7 @@ const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 const MongoStore = require('connect-mongo');
 const dbUrl = process.env.DB_URL;
+const seedDB = require('./seeds/index');
 
 const store = MongoStore.create({
 	mongoUrl: dbUrl,
@@ -151,6 +152,17 @@ app.use((err, req, res, next) => {
 	if (!err.message) err.message = 'Oh No, Something Went Wrong!';
 	res.status(statusCode).render('error', { err });
 });
+
+app.get('/seed', async (req, res) => {
+	try {
+		await seedDB();
+		res.send('✅ Database seeded successfully!');
+	} catch (e) {
+		console.log(e);
+		res.status(500).send('❌ Error seeding the database.');
+	}
+});
+
 app.listen(3000, () => {
 	console.log('Serving on port 3000');
 });
