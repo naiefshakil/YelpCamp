@@ -26,16 +26,6 @@ const dbUrl = process.env.DB_URL;
 
 const seedDB = require('./seeds/index');
 
-app.get('/seed', async (req, res) => {
-	try {
-		await seedDB();
-		res.send('Database seeded successfully!');
-	} catch (e) {
-		console.log(e);
-		res.status(500).send('Error seeding the database.');
-	}
-});
-
 const store = MongoStore.create({
 	mongoUrl: dbUrl,
 	touchAfter: 24 * 60 * 60,
@@ -152,6 +142,16 @@ app.use('/campgrounds/:id/reviews', reviewRoutes);
 
 app.get('/', (req, res) => {
 	res.render('home');
+});
+
+app.get('/seed', async (req, res) => {
+	try {
+		await seedDB();
+		res.send('Database seeded successfully!');
+	} catch (e) {
+		console.log(e);
+		res.status(500).send('Error seeding the database.');
+	}
 });
 
 app.all('*', (req, res, next) => {
