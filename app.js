@@ -143,16 +143,6 @@ app.get('/', (req, res) => {
 	res.render('home');
 });
 
-app.all('*', (req, res, next) => {
-	next(new ExpressError('Page Not Found', 404));
-});
-
-app.use((err, req, res, next) => {
-	const { statusCode = 500 } = err;
-	if (!err.message) err.message = 'Oh No, Something Went Wrong!';
-	res.status(statusCode).render('error', { err });
-});
-
 app.get('/seed', async (req, res) => {
 	try {
 		await seedDB();
@@ -161,6 +151,16 @@ app.get('/seed', async (req, res) => {
 		console.log(e);
 		res.status(500).send('❌ Error seeding the database.');
 	}
+});
+
+app.all('*', (req, res, next) => {
+	next(new ExpressError('Page Not Found', 404));
+});
+
+app.use((err, req, res, next) => {
+	const { statusCode = 500 } = err;
+	if (!err.message) err.message = 'Oh No, Something Went Wrong!';
+	res.status(statusCode).render('error', { err });
 });
 
 app.listen(3000, () => {
