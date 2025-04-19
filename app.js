@@ -149,7 +149,7 @@ app.get('/seed', async (req, res) => {
 		res.send('✅ Database seeded successfully!');
 	} catch (e) {
 		console.log(e);
-		res.status(500).send('❌ Error seeding the database.');
+		res.status(500).send(`❌ Error seeding the database: ${e.message}`);
 	}
 });
 
