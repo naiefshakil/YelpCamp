@@ -66,3 +66,5 @@ const seedDB = async () => {
 		await camp.save();
 	}
 };
+
+module.exports = seedDB;
