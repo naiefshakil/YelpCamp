@@ -24,6 +24,18 @@ const userRoutes = require('./routes/users');
 const MongoStore = require('connect-mongo');
 const dbUrl = process.env.DB_URL;
 
+const seedDB = require('./seeds/index');
+
+app.get('/seed', async (req, res) => {
+	try {
+		await seedDB();
+		res.send('Database seeded successfully!');
+	} catch (e) {
+		console.log(e);
+		res.status(500).send('Error seeding the database.');
+	}
+});
+
 const store = MongoStore.create({
 	mongoUrl: dbUrl,
 	touchAfter: 24 * 60 * 60,
