@@ -3,6 +3,7 @@ const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
 const axios = require('axios');
+const User = require('../models/user');
 
 require('dotenv').config();
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
